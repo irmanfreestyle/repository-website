@@ -1,14 +1,14 @@
-<div class="container pt-5">    
+<div class="container pt-5" style="min-height: 550px">    
     <div class="row">
-        <div class="col sm-12 col-md-7">
+        <div class="col sm-12 col-md-7" style="padding-bottom:20px">
             <div class="font-weight-bold text-success py-2">
                 <?=$file->judul?>
             </div>
             <div class="d-flex">                
                 <?php if(strlen($file->gambar_file)): ?>
-                    <img src="<?=base_url()?>assets/images/upload/<?=$file->gambar_file?>" class="rounded float-left" width="150px">
+                    <img src="<?=base_url()?>assets/images/upload/<?=$file->gambar_file?>" class="rounded float-left" width="150px" height="200px">
                 <?php else: ?>
-                    <img src="<?=base_url()?>assets/images/default/book.png" class="rounded float-left" width="150px">
+                    <img src="<?=base_url()?>assets/images/default/book.png" class="rounded float-left" width="150px" height="200px">
                 <?php endif; ?>
                 <div class="row px-2">
                     <div class="col-sm-12">
@@ -35,12 +35,16 @@
                     <div class="col-sm-5">
                         <span class="text-success font-weight-bold">KATA KUNCI :</span>
                     </div>
+                    
                     <div class="col-sm-7 text-secondary">
                         <?=$file->kata_kunci?>
                     </div>
-                    <div class="col-sm-12">
-                        <a download href="<?=base_url()?>assets/files/<?=$file->nama_file?>" class="btn bg-info btn-sm btn-block text-light">Download</a>
+                    <div class="col-sm-5">
+                        <span class="text-success font-weight-bold">TAHUN TERBIT :</span>
                     </div>
+                    <div class="col-sm-7 text-secondary">
+                        <?=$file->tahun_upload?>
+                    </div>                    
                 </div>
             </div>
 
@@ -53,9 +57,19 @@
                     <?php echo strlen($file->abstrak)? $file->abstrak : '-'?>
                 </p>
                 <span class="font-weight-bold text-success">
-                    File Preview
+                    Lampiran Berkas
                 </span>
-                <iframe src="<?=base_url()?>assets/files/<?=$file->nama_file?>" frameborder="0" height="600px" width="100%"></iframe>
+                <!-- <iframe src="<?=base_url()?>assets/files/<?=$file->nama_file?>" frameborder="0" height="600px" width="100%"></iframe> -->
+                <?php foreach($data_files as $data_file) : ?>
+                    <div style="border: 1px solid #ddd; padding: 10px;display:flex;justify-content:space-between;">                 
+                        <a href="<?=base_url()?>assets/files/<?=$data_file->path?>" download >
+                            <?=$data_file->nama_file?>
+                        </a>
+                        <div>
+                            <i class="fa fa-file-pdf text-success large" style="font-size:20px;"></i>
+                        </div>
+                    </div>
+                <?php endforeach;?>
             </div>
             
         </div>
@@ -64,7 +78,7 @@
                 <div class="input-group mb-3">                
                     <input type="text" class="form-control" placeholder="Cari" name="keyword">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">
                             <i class="fas fa-search text-success"></i>
                         </button>
                     </div>
@@ -74,9 +88,9 @@
             <br>
             <span class="font-weight-bold text-success">
                 <?php if($file->kategori != 'ebook'): ?>
-                    Repository terbaru lainnya
+                    Daftar Penelitian Terbaru
                 <?php else: ?>
-                    E-book terbaru lainnya
+                    Daftar E-Book Terbaru
                 <?php endif; ?>                
             </span>
             <?php if($file->kategori == 'ebook'): ?>

@@ -11,5 +11,12 @@ class Ebook extends CI_Controller {
 		$data['files'] = $this->db->get('files')->result();
 		$this->load->view('main/template', $data);	
 	}	
+	public function index2()
+	{		
+		$data['title'] = "E-Book | Repository TE Unjani";
+		
+		$data['content'] = "main/detail";
+		$this->load->view('main/template', $data);	
+	}	
 	
 }

@@ -1,5 +1,7 @@
 <div class="container pt-5" style="min-height:600px">    
-    <h4 class="text-center text-success font-weight-bold">Semua E-book</h4>
+    <h4 class="text-center text-success font-weight-bold">Hasil Pencarian</h4>
+    <h6 class="text-center text-info">Hasil pencarian : "<?=trim($this->input->get('keyword'))?>"</h6>
+    <?php if(count($files)) : ?>
     <div class="d-flex flex-wrap">
         <?php foreach($files as $file): ?>
             <div class="card my-3 mx-3" style="width: 14rem;">
@@ -17,4 +19,8 @@
             </div>            
         <?php endforeach; ?>
     </div>
+
+    <?php else : ?> 
+    <h4 class="text-center text-info pt-5">Hasil pencarian tidak ditemukan</h4>
+    <?php endif; ?>
 </div>

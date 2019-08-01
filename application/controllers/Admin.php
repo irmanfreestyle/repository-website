@@ -14,7 +14,9 @@ class Admin extends CI_Controller {
         $data['title'] = "ADMIN | Repository TE Unjani";
         $data['page'] = 'DASHBOARD | REPOSITORY TE UNJANI';
         $data['content'] = "admin/dashboard";
-        $data['files'] = $this->Mdashboard->getFile();
+        $this->db->order_by("tgl_upload", "desc");
+        $data['files'] = $this->db->get('files')->result();
+         
 
 		$this->load->view('admin/template', $data);	
     }	
@@ -73,14 +75,22 @@ class Admin extends CI_Controller {
         }
     }
 
-    function uploadimage() {
-        $config['upload_path']          = 'assets/images/upload/';
-		$config['allowed_types']        = 'gif|jpg|png|jpeg';
-        $config['max_size']             = 1000000;
-        $config['encrypt_name'] = TRUE;                
+    function uploadFile() {
+        $type = $this->input->get('type');
+
+        
+        $config['upload_path'] = 'assets/files/';
+        $config['allowed_types'] = '*';
+        $config['max_size'] = 5000000;
+        $config['encrypt_name'] = TRUE; 
+
+        if($type == 'image') {
+            $config['upload_path'] = 'assets/images/upload/';
+        }
+        		
 		$this->load->library('upload', $config);
  
-		if ($this->upload->do_upload('image')){
+		if ($this->upload->do_upload($type)){
             $filename = $this->upload->data('file_name');            
             echo json_encode(['status'=>'success', 'filename'=>$filename]);
 		} else {
@@ -89,40 +99,37 @@ class Admin extends CI_Controller {
         }
     }
 
-    function uploadfile() {
-        $config['upload_path']          = 'assets/files/';
-		$config['allowed_types']        = '*';
-        $config['max_size']             = 1000000;
-        $config['encrypt_name'] = TRUE;        
+    function uploadRepo() {
+        $id_repo = uniqid();     
 
-		$this->load->library('upload', $config);
- 
-		if ( ! $this->upload->do_upload('file')){
-            $error = array('error' => $this->upload->display_errors());
-            $this->session->set_flashdata('alert', 'error');
-            redirect(base_url().'admin/uploadpage', $error);
-		}else{
-            $filename = $this->upload->data('file_name');
-            $dataFile = [
-                'nama_file' => $filename,
-                'kategori' => $this->input->post('kategori'),
-                'judul' => $this->input->post('judul'),
-                'pengarang' => $this->input->post('pengarang'),
-                'dosen_pembimbing' => $this->input->post('pembimbing'),
-                'kata_kunci' => $this->input->post('kata_kunci'),
-                'abstrak' => $this->input->post('abstrak'),
-                'gambar_file' => $this->input->post('gambar_file'),
-                'tgl_upload' => date("Y/m/d")
-            ];            
-                        
-            $this->db->insert('files', $dataFile);
+        $dataRepo = [
+            'id_file' => $id_repo,
+            'kategori' => $this->input->post('kategori'),
+            'judul' => $this->input->post('judul'),
+            'pengarang' => $this->input->post('pengarang'),
+            'dosen_pembimbing' => $this->input->post('pembimbing'),
+            'kata_kunci' => $this->input->post('kata_kunci'),
+            'tahun_upload' => $this->input->post('tahun'),
+            'abstrak' => $this->input->post('abstrak'),
+            'gambar_file' => $this->input->post('gambar_file'),
+            'tgl_upload' => date("Y/m/d")
+        ];            
+                    
+        $this->db->insert('files', $dataRepo);
+        
 
-            if($this->db->affected_rows() > 0) {
-                $this->session->set_flashdata('alert', 'success');
+        if($this->db->affected_rows() > 0) {            
+            foreach($this->input->post('nama_file') as $idx=>$val) {
+                $this->db->insert('file_files', [
+                    'id_file' => $id_repo,
+                    'nama_file' => $this->input->post('nama_file')[$idx],
+                    'path' => $this->input->post('path')[$idx]
+                ]);
             }
+        }
 
-            redirect(base_url().'admin/uploadpage');
-		}
+        $this->session->set_flashdata('alert', 'success');
+        redirect(base_url().'admin/uploadpage');
     }
 
     function deletefile() {
@@ -133,3 +140,9 @@ class Admin extends CI_Controller {
     }
 	
 }
+
+
+ini_set('upload_max_filesize', '500M');
+ini_set('post_max_size', '500M');
+ini_set('max_input_time', 5000);
+ini_set('max_execution_time', 5000);

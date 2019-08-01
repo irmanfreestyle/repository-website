@@ -1,7 +1,7 @@
 <div class="unjani-header">
-    <div class="unjani-header-image" style="background-image: url('<?=base_url()?>assets/images/default/header.jpg'"></div>    
+    <div class="unjani-header-image" style="background-image: url('<?=base_url()?>assets/images/default/headerr.jpg'"></div>    
     <form class="search-box" action="<?=base_url()?>home/search/" method="get">
-        <input type="text" name="keyword" placeholder="Cari Jurnal atau E-book...">
+        <input type="text" name="keyword" placeholder="Masukkan Kata Kunci Pencarian..">
         <button type="submit" class="search-btn">
             <i class="fas fa-search"></i>
         </button>
@@ -10,14 +10,16 @@
 
 
 <div class="container py-5 text-center">
-    <h3 class="font-weight-bold"><span class="text-success">REPOSITORY</span> FAKULTAS EKONOMI UNJANI</h3>
+    <h3 class="font-weight-bold"><span class="text-success">Database Skripsi, E-Book, Penelitian<h3><h3></span> TEKNIK ELEKTRO UNJANI</h3>
     <br>
     <div class="d-flex justify-content-around flex-wrap">
         <div class="unjani-main-card text-secondary py-3 px-3 my-3">
             <a href="<?=base_url()?>ebook" class="text-success"><h3>E-book Perkuliahan</h3></a>
             <i class="py-3 fas fa-book fa-3x"></i>
             <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore eligendi officia possimus esse temporibus adipisci minus. Neque nesciunt magnam quae quo dolorum quis ipsam debitis asperiores pariatur
+            <h5 class="text-secondary font-weight-bold">
+                Berisi E-Book Materi Perkuliahan Mahasiswa Teknik Elektro Unjani
+            </h5>
             </p>
             <a href="<?=base_url()?>ebook">
                 <button class="btn btn-block bg-success text-light">Lihat E-book</button>
@@ -25,13 +27,15 @@
         </div>
 
         <div class="unjani-main-card text-secondary py-3 px-3 my-3">
-            <a href="" class="text-success"><h3>Repository</h3></a>
+            <a href="<?=base_url()?>repository" class="text-success"><h3>Penelitian</h3></a>
             <i class="py-3 fas fa-box-open fa-3x"></i>
             <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore eligendi officia possimus esse temporibus adipisci minus. Neque nesciunt magnam quae quo dolorum quis ipsam debitis asperiores pariatur
+            <h5 class="text-secondary font-weight-bold">
+                Berisi Penelitian, Skripsi dan Tugas Akhir Mahasiswa Teknik Elektro Unjani
+            </h5>
             </p>
             <a href="<?=base_url()?>repository">
-                <button class="btn btn-block bg-success text-light">Lihat Repository</button>
+                <button class="btn btn-block bg-success text-light">Lihat Penelitian</button>
             </a>            
         </div>
     </div>
@@ -45,7 +49,7 @@
     <div class="row">
         <div class="col sm-12 md-6">
             <h5 class="text-success font-weight-bold">
-                E-Book Upload Terbaru
+                E-Book Terbaru
             </h5>
             <div>
                 <?php foreach($files as $file): ?>
@@ -56,7 +60,7 @@
                             <?=$file->judul?>
                             </h6>                            
                             <small class="text-secondary">
-                                diupload pada <?= date('d M Y', strtotime($file->tgl_upload)); ?>
+                                Di upload pada <?= date('d M Y', strtotime($file->tgl_upload)); ?>
                             </small>
                             <div>
                                 <button class="py-0 px-1 btn btn-sm btn-outline-success" disabled>
@@ -71,7 +75,7 @@
         </div>
         <div class="col sm-12 md-6">
             <h5 class="text-info font-weight-bold">
-                Repository Upload Terbaru
+                Penelitian Terbaru
             </h5>
             <div>
                 <?php foreach($files as $file): ?>
@@ -82,7 +86,7 @@
                             <?=$file->judul?>
                             </h6>                            
                             <small class="text-secondary">
-                                diupload pada <?= date('d M Y', strtotime($file->tgl_upload)); ?>
+                                Di unggah pada <?= date('d M Y', strtotime($file->tgl_upload)); ?>
                             </small>
                             <div>
                                 <button class="py-0 px-1 btn btn-sm btn-outline-success" disabled>

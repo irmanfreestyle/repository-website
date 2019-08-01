@@ -12,6 +12,7 @@ class Detail extends CI_Controller {
 		$this->db->where(['id_file'=>$id_file]);
 		$data['file'] = $this->db->get('files')->result()[0];
 		$data['files'] = $this->db->get('files')->result();
+		$data['data_files'] = $this->db->get_where('file_files', ['id_file' => $id_file])->result();
 
 		$this->load->view('main/template', $data);	
 	}
